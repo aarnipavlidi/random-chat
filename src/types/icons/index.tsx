@@ -1,9 +1,10 @@
 import { SVGProps } from 'react';
 
+type HeroIconNameType = 'arrow-uturn-left';
 type CustomIconNameType = 'StackingBlock' | 'TerminalTag';
 
 export interface CustomIconsProps extends SVGProps<SVGSVGElement> {
-  name: CustomIconNameType
+  name: HeroIconNameType | CustomIconNameType
   variant?: 'solid' | 'outline' | 'mini';
   color: 'current' | 'inherit';
   className?: string;
