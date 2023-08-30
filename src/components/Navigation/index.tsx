@@ -27,7 +27,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   });
 
   const navContainer = classNames({
-    'flex flex-col md:flex-row md:justify-between': true,
+    'flex flex-row justify-between': true,
   });
 
   const navLinksContainer = classNames({

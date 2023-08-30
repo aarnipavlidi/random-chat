@@ -83,22 +83,22 @@ const CardSlug: React.FC<CardSlugProps> = ({ currentAuthUser, ...props }) => {
   };
 
   return (
-    <div className="flex flex-col py-4 gap-y-4 relative h-[calc(100vh-80px)] font-pier-sans text-neutral-900">
+    <div className="flex flex-col py-4 xl:py-32 gap-y-4 relative h-[calc(100vh-80px)] font-pier-sans text-neutral-900">
       {
-        cardData && cardData.title && <div className="flex w-3/5 mb-4 justify-between self-center bg-neutral-200/30 px-4 py-4 rounded-full">
+        cardData && cardData.title && <div className="flex w-full lg:w-3/5 gap-x-2 mb-4 justify-between self-center bg-neutral-200/30 px-4 py-4 rounded-full">
           <Hero
             title="Go Back"
             wrapperClass='flex flex-row gap-2 items-center'
           />
           <Typography
             content={cardData.title}
-            className=""
+            className="truncate"
             size="lg"
           />
         </div>
       }
       {
-        messages && messages.length > 0 && <div ref={messageContainerRef} className="flex w-3/5 self-center overflow-y-scroll h-full">
+        messages && messages.length > 0 && <div ref={messageContainerRef} className="flex w-full lg:w-3/5 self-center overflow-y-scroll h-full">
           <Messages
             currentAuthUserID={currentAuthUser?.id}
             data={messages}
@@ -108,7 +108,7 @@ const CardSlug: React.FC<CardSlugProps> = ({ currentAuthUser, ...props }) => {
         </div>
       }
       {
-        currentAuthUser && <form className="flex flex-row w-3/5 self-center gap-4" onClick={handleUserMessage}>
+        currentAuthUser && <form className="flex flex-row w-full lg:w-3/5 self-center gap-4" onClick={handleUserMessage}>
           <Input
             variant="full-width"
             type="text"
