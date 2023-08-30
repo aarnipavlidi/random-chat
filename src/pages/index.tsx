@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import supabase from '@/utils/supabase';
 
+import Typography from '@/components/Typography';
 import Card from '@/components/Card';
 import CardList from '@/components/CardList';
 
-interface HomeProps {
+interface HomeSlugProps {
   currentAuthUser: User | null;
 }
 
-const Home: React.FC<HomeProps> = ({ currentAuthUser }) => {
+const HomeSlug: React.FC<HomeSlugProps> = ({ currentAuthUser }) => {
   const [currentCards, setCurrentCards] = useState<CardProps[]>([]);
   const router = useRouter();
 
@@ -68,7 +69,7 @@ const Home: React.FC<HomeProps> = ({ currentAuthUser }) => {
 
   useEffect(() => {
     const listenForChanges = supabase
-      .channel('any')
+      .channel('table-db-changes')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'cards' }, payload => {
         setCurrentCards((currentCards) => [...currentCards, payload.new] as CardProps[]);
       })
@@ -80,18 +81,31 @@ const Home: React.FC<HomeProps> = ({ currentAuthUser }) => {
   });
 
   return (
-    <div className="flex flex-wrap font-pier-sans text-neutral-900 space-x-6">
-      <Card
-        cardType='new'
-        handleNewCard={handleNewCard}
-      />
+    <div className="font-pier-sans text-neutral-900">
       {
-        currentCards && currentCards.length > 0 && <CardList
-          data={currentCards}
-        />
+        !currentAuthUser && <div className="flex w-full justify-end">
+          <Typography
+            content="You need to be logged in to be able to create cards and send messages inside the cards."
+            className="max-w-prose"
+            size="lg"
+          />
+        </div>
       }
+      <div className="flex flex-wrap py-8 gap-4">
+        {
+          currentAuthUser && <Card
+            cardType='new'
+            handleNewCard={handleNewCard}
+          />
+        }
+        {
+          currentCards && currentCards.length > 0 && <CardList
+            data={currentCards}
+          />
+        }
+      </div>
     </div>
   );
 };
 
-export default Home;
+export default HomeSlug;

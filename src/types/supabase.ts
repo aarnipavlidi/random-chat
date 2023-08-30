@@ -40,6 +40,40 @@ export interface Database {
           }
         ]
       }
+      messages: {
+        Row: {
+          author_id: string
+          author_name: string
+          cardID: string
+          content: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          author_id?: string
+          author_name: string
+          cardID: string
+          content: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          author_id?: string
+          author_name?: string
+          cardID?: string
+          content?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'messages_cardID_fkey'
+            columns: ['cardID']
+            referencedRelation: 'cards'
+            referencedColumns: ['id']
+          }
+        ]
+      }
       users: {
         Row: {
           id: string

@@ -39,7 +39,7 @@ const Card: React.FC<CardProps> = (props) => {
         props.cardType === 'old' && <>
           <Typography
             content={props.cardName || ''}
-            className="self-start px-2 py-2 rounded-xl bg-neutral-900 text-neutral-100"
+            className="text-center px-2 py-2 rounded-xl bg-neutral-900 text-neutral-100 truncate w-full"
           />
           <div className="flex flex-row justify-between">
             <Typography

@@ -23,7 +23,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   };
 
   const headerContainer = classNames({
-    ['w-screen mx-auto px-4 text-blue font-pier-sans md:container bg-inherit']: true,
+    ['w-screen h-20 mx-auto px-4 text-blue font-pier-sans md:container bg-inherit']: true,
   });
 
   const navContainer = classNames({
