@@ -1,3 +1,4 @@
+import type { Database } from '@/types/supabase';
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseURL = process.env.NODE_ENV === 'development'
@@ -12,6 +13,6 @@ if (!supabaseURL || !supabaseKEY) {
   throw new Error('Missing env variables! :(');
 }
 
-const supabase = createClient(supabaseURL, supabaseKEY);
+const supabase = createClient<Database>(supabaseURL, supabaseKEY);
 
 export default supabase;
