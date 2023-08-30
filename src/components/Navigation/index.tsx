@@ -1,7 +1,7 @@
 import type { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import supabase from '@/utils/supabase';
 
 import classNames from 'classnames';
@@ -10,30 +10,11 @@ import Typography from '@/components/Typography';
 import Button from '@/components/Button';
 
 interface NavigationProps {
+  currentAuthUser: User | null;
 }
 
 const Navigation: React.FC<NavigationProps> = (props) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const router = useRouter();
-
-  useEffect(() => {
-    const getCurrentUserData = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        setCurrentUser(session?.user ?? null);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getCurrentUserData();
-  }, []);
-
-  useEffect(() => {
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setCurrentUser(session?.user ?? null);
-    });
-  });
 
   const handleUserLogout = async () => {
     await supabase.auth.signOut();
@@ -78,7 +59,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
         </div>
         <div className={navLinksContainer}>
           {
-            currentUser && <div id="user-logout-link">
+            props.currentAuthUser && <div id="user-logout-link">
               <Button
                 content='Logout'
                 className="text-lg 2xl:text-xl"
@@ -87,7 +68,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
             </div>
           }
           {
-            !currentUser && <div id="user-login-link">
+            !props.currentAuthUser && <div id="user-login-link">
               <Link legacyBehavior={true} href="/login">
                 <a className='text-lg 2xl:text-xl'>Login</a>
               </Link>

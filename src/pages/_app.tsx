@@ -1,4 +1,7 @@
 import type { AppProps } from 'next/app';
+import type { User } from '@supabase/supabase-js';
+import { useState, useEffect } from 'react';
+import supabase from '@/utils/supabase';
 import Layout from '@/components/Layout';
 
 import '@/styles/globals.css';
@@ -27,9 +30,29 @@ const fontPierSans = localFont({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const getCurrentUserData = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setCurrentUser(session?.user ?? null);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getCurrentUserData();
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user ?? null);
+    });
+  }, []);
+
   return (
-    <Layout fontVariable={`${fontPierSans.variable}`}>
-      <Component {...pageProps} />
+    <Layout fontVariable={`${fontPierSans.variable}`} currentAuthUser={currentUser}>
+      <Component {...pageProps} currentAuthUser={currentUser} />
     </Layout>
   );
 }

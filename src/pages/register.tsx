@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import supabase from '@/utils/supabase';
 import Input from '@/components/Input.tsx';
 import Button from '@/components/Button';
@@ -5,6 +6,7 @@ import Typography from '@/components/Typography';
 import CustomLink from '@/components/CustomLink';
 
 const Register: React.FC = () => {
+  const router = useRouter();
 
   const handleUserRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -15,7 +17,7 @@ const Register: React.FC = () => {
 
     if ((email && typeof email === 'string') && (username && typeof username === 'string') && (password && typeof password === 'string')) {
 
-      const { error } = await supabase.auth.signUp(
+      const { data, error } = await supabase.auth.signUp(
         {
           email,
           password,
@@ -32,6 +34,10 @@ const Register: React.FC = () => {
         alert(error.message);
 
         return;
+      }
+
+      if (data.user) {
+        router.push('/');
       }
     }
 
