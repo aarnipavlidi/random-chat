@@ -91,7 +91,7 @@ const HomeSlug: React.FC<HomeSlugProps> = ({ currentAuthUser }) => {
           />
         </div>
       }
-      <div className="flex flex-wrap py-8 gap-4">
+      <div className="flex flex-wrap py-8 gap-4 justify-center lg:justify-normal">
         {
           currentAuthUser && <Card
             cardType='new'

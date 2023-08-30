@@ -11,9 +11,8 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = (props) => {
-
   const formContainer = classNames({
-    'flex flex-col w-64 aspect-square shadow shadow-neutral-500 rounded-2xl p-3 justify-between': true,
+    'flex flex-col w-52 lg:w-64 aspect-square shadow shadow-neutral-500 rounded-2xl p-3 justify-between': true,
     'border border-neutral-500': props.cardType === 'old',
     'transition-all duration-300 hover:shadow-none': props.cardType === 'old',
   });
